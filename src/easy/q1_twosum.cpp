@@ -22,12 +22,6 @@ public:
         }
         return {-1, -1};
     }
-/*
-	friend std::ostream &operator<<(std::ostream& os, const std::vector<int>& v){
-	    os << '['  << v[0] << ',' << ']' << '\n';
-		return os;
-	}
-*/
 };
 
 int main(){
