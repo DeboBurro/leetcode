@@ -1,3 +1,4 @@
+# First solution : runs 3700ms, bottom 5 %, will need to optimize later
 class MedianFinder:
 
     def __init__(self):
@@ -37,3 +38,22 @@ class MedianFinder:
 # obj = MedianFinder()
 # obj.addNum(num)
 # param_2 = obj.findMedian()
+
+# Second solution : 600 ms, two priority-queue to maintain the middle position
+from heapq import *
+class MedianFinder:
+    def __init__(self):
+        self.heaps = [], []
+
+    def addNum(self, num: int) -> None:
+        small, large = self.heaps
+        heappush(large, num)
+        heappush(small, -heappop(large))
+        if len(large) < len(small):
+            heappush(large, -heappop(small))
+        
+    def findMedian(self) -> float:
+        small, large = self.heaps
+        if len(large) > len(small):
+            return large[0]
+        return (large[0] - small[0]) / 2
