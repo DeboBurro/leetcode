@@ -24,9 +24,20 @@ public:
     }
 };
 
+
+std::ostream& operator<<(std::ostream& os, std::vector<int> res)
+{
+    os << '[';
+    for(auto i: res){
+      os << std::to_string(i) << ',';
+    }
+    os << ']';
+    return os;
+};
+
 int main(){
     std::vector<int> nums = {2,7,11,15};
     int target = 9;
 	Solution s;
-    std::cout << s.twoSum(nums, target);
+    std::cout << s.twoSum(nums, target) << endl;
 }
