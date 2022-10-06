@@ -1,0 +1,31 @@
+# Ref: https://leetcode.com/problems/design-twitter/discuss/82863/Python-solution
+# Using an iterator is much nicer than self checking the size 10
+# heapq.merge unpacking the lists and return an iterator damn
+# time -= 1 so the latest post will be put on top of the heap ( by defualt python heapq is a min heap )
+from collections import defaultdict, deque
+from itertools import islice
+class Twitter(object):
+
+    def __init__(self):
+        self.time = 0
+        self.post = defaultdict(deque)
+        self.whoIfollow = defaultdict(set)
+
+    def postTweet(self, userId, tweetId):
+        self.post[userId].appendleft((self.time, tweetId))
+        self.time -= 1
+
+    def getNewsFeed(self, userId):
+        tweets = heapq.merge(*(self.post[u] for u in self.whoIfollow[userId] | {userId} ))
+        return [tweetId for time, tweetId in islice(tweets, 10) ]
+
+    def follow(self, followerId, followeeId):
+        self.whoIfollow[followerId].add(followeeId)
+
+    def unfollow(self, followerId, followeeId):
+        self.whoIfollow[followerId].discard(followeeId)
+
+if __name__ == '__main__':
+    actions = ["Twitter","postTweet","getNewsFeed","follow","getNewsFeed","unfollow","getNewsFeed"]
+    args = [[],[1,1],[1],[2,1],[2],[2,1],[2]]
+    expected_output = [null,null,[1],null,[1],null,[]]
